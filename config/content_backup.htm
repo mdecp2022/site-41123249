@@ -397,58 +397,7 @@ doc["add1to100"].bind('click', add)
 <!-- editor1 開始 -->
 <p><!-- 用來顯示程式碼的 editor 區域 --></p>
 <div id="kw_editor1" style="width: 600px; height: 300px;">
-<div>
-<pre><span class="cm-line"><span class="cm-keyword">import</span> <span class="cm-variable">ast</span>
-</span><span class="cm-line">
-</span><span class="cm-line"><span class="cm-comment"># get stud_list first</span>
-</span><span class="cm-line">
-</span><span class="cm-line"><span class="cm-keyword">def</span> <span class="cm-def">get_stud</span>(<span class="cm-variable">c_name</span>):
-</span><span class="cm-line">    <span class="cm-variable">courses</span> <span class="cm-operator">=</span> {<span class="cm-string">"1a"</span>: <span class="cm-string">"0747"</span>, <span class="cm-string">"1b"</span>: <span class="cm-string">"0761"</span>, <span class="cm-string">"2a"</span>: <span class="cm-string">"0773"</span>, <span class="cm-string">"2b"</span>: <span class="cm-string">"0786"</span>}
-</span><span class="cm-line">    <span class="cm-comment">#c_name = "1b"</span>
-</span><span class="cm-line">    <span class="cm-variable">c</span> <span class="cm-operator">=</span> <span class="cm-variable">courses</span>[<span class="cm-variable">c_name</span>]
-</span><span class="cm-line">    <span class="cm-variable">url</span> <span class="cm-operator">=</span> <span class="cm-string">"https://nfu.cycu.org/?semester=1111&amp;courseno="</span> <span class="cm-operator">+</span> <span class="cm-variable">c</span> <span class="cm-operator">+</span> <span class="cm-string">"&amp;column=True"</span>
-</span><span class="cm-line">    <span class="cm-variable">data</span> <span class="cm-operator">=</span> <span class="cm-builtin">open</span>(<span class="cm-variable">url</span>).<span class="cm-property">read</span>().<span class="cm-property">split</span>(<span class="cm-string">"\n"</span>)
-</span><span class="cm-line">    <span class="cm-variable">stud</span> <span class="cm-operator">=</span> <span class="cm-variable">data</span>[:<span class="cm-operator">-</span><span class="cm-number">1</span>]
-</span><span class="cm-line">    <span class="cm-keyword">return</span> <span class="cm-variable">stud</span>
-</span><span class="cm-line">    
-</span><span class="cm-line"><span class="cm-variable">cp_stud</span> <span class="cm-operator">=</span> <span class="cm-variable">get_stud</span>(<span class="cm-string">"1b"</span>)
-</span><span class="cm-line">
-</span><span class="cm-line"><span class="cm-comment"># get w10 quiz result</span>
-</span><span class="cm-line"><span class="cm-variable">cp_w11_quiz_url</span> <span class="cm-operator">=</span> <span class="cm-string">"https://gist.githubusercontent.com/mdecycu/9df4b372ac1b7386cf259ced15f1a2b2/raw/8e59f90d8ff4f1ad4fecd4f7ee159f91eb6addf9/cp1b_w11_quiz_result.json"</span>
-</span><span class="cm-line"><span class="cm-variable">cp_w10_quiz_url</span> <span class="cm-operator">=</span> <span class="cm-string">"https://gist.githubusercontent.com/mdecycu/9df4b372ac1b7386cf259ced15f1a2b2/raw/a6825f13b1bb0b61e09e74dd117729eefe1d947f/20221110_cp1b_w10_quiz.json"</span>
-</span><span class="cm-line">
-</span><span class="cm-line"><span class="cm-keyword">def</span> <span class="cm-def">get_score</span>(<span class="cm-variable">url</span>):
-</span><span class="cm-line">    <span class="cm-variable">num_stud</span> <span class="cm-operator">=</span> <span class="cm-number">0</span>
-</span><span class="cm-line">    <span class="cm-variable">total_score</span> <span class="cm-operator">=</span> <span class="cm-number">0</span>
-</span><span class="cm-line">    <span class="cm-variable">json_data</span> <span class="cm-operator">=</span> <span class="cm-builtin">open</span>(<span class="cm-variable">url</span>).<span class="cm-property">read</span>()
-</span><span class="cm-line">    <span class="cm-variable">big_dict</span> <span class="cm-operator">=</span> <span class="cm-variable">ast</span>.<span class="cm-property">literal_eval</span>(<span class="cm-variable">json_data</span>)
-</span><span class="cm-line">    <span class="cm-variable">data</span> <span class="cm-operator">=</span> <span class="cm-variable">big_dict</span>[<span class="cm-string">"body"</span>][<span class="cm-string">"testuser"</span>]
-</span><span class="cm-line">    <span class="cm-variable">quiz_dict</span> <span class="cm-operator">=</span> {}
-</span><span class="cm-line">    <span class="cm-keyword">for</span> <span class="cm-variable">i</span> <span class="cm-keyword">in</span> <span class="cm-variable">data</span>:
-</span><span class="cm-line">        <span class="cm-variable">stud_id</span> <span class="cm-operator">=</span> <span class="cm-variable">data</span>[<span class="cm-variable">i</span>][<span class="cm-string">"user_name"</span>]
-</span><span class="cm-line">        <span class="cm-variable">stud_score</span> <span class="cm-operator">=</span> <span class="cm-builtin">int</span>(<span class="cm-builtin">float</span>(<span class="cm-variable">data</span>[<span class="cm-variable">i</span>][<span class="cm-string">"total_score"</span>]))
-</span><span class="cm-line">        <span class="cm-variable">quiz_dict</span>[<span class="cm-variable">stud_id</span>] <span class="cm-operator">=</span> <span class="cm-variable">stud_score</span>
-</span><span class="cm-line">        <span class="cm-variable">num_stud</span> <span class="cm-operator">=</span> <span class="cm-variable">num_stud</span> <span class="cm-operator">+</span> <span class="cm-number">1</span>
-</span><span class="cm-line">        <span class="cm-variable">total_score</span> <span class="cm-operator">=</span> <span class="cm-variable">total_score</span> <span class="cm-operator">+</span> <span class="cm-variable">stud_score</span>
-</span><span class="cm-line">    <span class="cm-keyword">return</span> <span class="cm-variable">quiz_dict</span>, <span class="cm-variable">num_stud</span>, <span class="cm-variable">total_score</span>
-</span><span class="cm-line">    
-</span><span class="cm-line"><span class="cm-comment">#cp_quiz, num_stud, total_score = get_score(cp_w10_quiz_url)</span>
-</span><span class="cm-line"><span class="cm-variable">cp_quiz</span>, <span class="cm-variable">num_stud</span>, <span class="cm-variable">total_score</span> <span class="cm-operator">=</span> <span class="cm-variable">get_score</span>(<span class="cm-variable">cp_w11_quiz_url</span>)
-</span><span class="cm-line"><span class="cm-variable">cp_abs</span> <span class="cm-operator">=</span> []
-</span><span class="cm-line"><span class="cm-keyword">for</span> <span class="cm-variable">stud</span> <span class="cm-keyword">in</span> <span class="cm-variable">cp_stud</span>:
-</span><span class="cm-line">    <span class="cm-keyword">try</span>:
-</span><span class="cm-line">        <span class="cm-builtin">print</span>(<span class="cm-variable">stud</span>, <span class="cm-variable">cp_quiz</span>[<span class="cm-variable">stud</span>])
-</span><span class="cm-line">    <span class="cm-keyword">except</span>:
-</span><span class="cm-line">        <span class="cm-comment"># 缺考者沒有 quiz 成績</span>
-</span><span class="cm-line">        <span class="cm-builtin">print</span>(<span class="cm-variable">stud</span>, <span class="cm-string">"缺"</span>)
-</span><span class="cm-line">        <span class="cm-variable">cp_abs</span>.<span class="cm-property">append</span>(<span class="cm-variable">stud</span>)
-</span><span class="cm-line"><span class="cm-builtin">print</span>(<span class="cm-string">"\n考試平均分數為:"</span>, <span class="cm-builtin">int</span>(<span class="cm-variable">total_score</span><span class="cm-operator">/</span><span class="cm-variable">num_stud</span>))
-</span><span class="cm-line"><span class="cm-comment"># 列出缺考名單</span>
-</span><span class="cm-line"><span class="cm-builtin">print</span>(<span class="cm-string">"="</span><span class="cm-operator">*</span><span class="cm-number">20</span>)
-</span><span class="cm-line"><span class="cm-builtin">print</span>(<span class="cm-string">"以下為 w10 缺考名單:"</span>)
-</span><span class="cm-line"><span class="cm-keyword">for</span> <span class="cm-variable">stud</span> <span class="cm-keyword">in</span> <span class="cm-variable">cp_abs</span>:
-</span><span class="cm-line">    <span class="cm-builtin">print</span>(<span class="cm-variable">stud</span>)</span></pre>
-</div>
+<pre></pre>
 </div>
 <p><!-- 以下的表單與按鈕與前面的 Javascript doSave 函式以及 FileSaver.min.js 互相配合 --></p>
 <p><!-- 存擋表單開始 --></p>
