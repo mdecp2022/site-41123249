@@ -12,7 +12,7 @@ class Init(object):
     uwsgi = False
     site_title = "41123249"
     ip = "127.0.0.1"
-    dynamic_port = 9443
+    dynamic_port = 8115
     static_port = 8443
     def __init__(self):
         # hope to create downloads and images directories　
